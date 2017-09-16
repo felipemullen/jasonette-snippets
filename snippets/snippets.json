@@ -536,7 +536,7 @@
             "{",
             "\t\"type\": \"\\$audio.duration\",",
             "\t\"options\": {",
-            "\t\t\"url\": \"${1:http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/songexploder/SongExploder73-Busdriver.mp3}\",",
+            "\t\t\"url\": \"${1:http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/songexploder/SongExploder73-Busdriver.mp3}\"",
             "\t},",
             "\t\"success\": { ${0} },",
             "\t\"error\": { }",
