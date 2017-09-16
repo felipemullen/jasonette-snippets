@@ -1,0 +1,21 @@
+{
+    "name": "jasonette-snippets",
+    "displayName": "Jasonette Snippets",
+    "description": "Contains JSON code snippets for Jasonette Actions and Components",
+    "version": "1.0.0",
+    "publisher": "felipemullen",
+    "engines": {
+        "vscode": "^1.16.0"
+    },
+    "categories": [
+        "Snippets"
+    ],
+    "contributes": {
+        "snippets": [
+            {
+                "language": "json",
+                "path": "./snippets/snippets.json"
+            }
+        ]
+    }
+}

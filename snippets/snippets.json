@@ -1,0 +1,917 @@
+{
+    ///////////////////////////////////////////////////////////////////////////
+    /// Jasonette Code Snippets
+    /// Felipe Mullen
+    /// 9.15.2017
+    /// -----------------------------------------------------------------------
+    /// Above all else, guard your heart, for everything you do flows from it
+    ///////////////////////////////////////////////////////////////////////////
+    "New Jasonette App": {
+        "prefix": "jason",
+        "body": [
+            "{",
+            "\t\"\\$jason\": {",
+            "\t\t\"head\": {",
+            "\t\t\t\"title\": \"${1:My New App}\",",
+            "\t\t\t\"description\": \"${2:A jasonette app}\",",
+            "\t\t\t\"offline\": \"${3|true,yes,on|}\",",
+            "\t\t\t\"styles\": { },",
+            "\t\t\t\"actions\": { },",
+            "\t\t\t\"templates\": { },",
+            "\t\t\t\"data\": { }",
+            "\t\t},",
+            "\t\t\"body\": {",
+            "\t\t\t\"header\": { },",
+            "\t\t\t\"sections\": [ ],",
+            "\t\t\t\"layers\": [ ],",
+            "\t\t\t\"footer\": { }",
+            "\t\t}",
+            "\t}",
+            "}"
+        ],
+        "description": "A new jasonette app base"
+    },
+    "Href link": {
+        "prefix": "href",
+        "body": [
+            "\"href\": {",
+            "\t\"url\": \"${1:www.mylinkurl.com/myfile.json}\",",
+            "\t\"view\": \"${2|jason,web,app|}\",",
+            "\t\"transition\": \"${3|push,modal,replace|}\",",
+            "\t\"loading\": \"${4|true,false|}\"",
+            "}"
+        ],
+        "description": "Used to describe links between views"
+    },
+    "Action - $require": {
+        "prefix": "$require",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$require\",",
+            "\t\"options\": {",
+            "\t\t${0}",
+            "\t},",
+            "\t\"success\": { },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "The $require action imports remote JSON files in parallel"
+    },
+    "Action - $lambda": {
+        "prefix": "$lambda",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$lambda\",",
+            "\t\"options\": {",
+            "\t\t\"name\": \"${1:function_name}\",",
+            "\t\t\"options\": {",
+            "\t\t\t${0}",
+            "\t\t}",
+            "\t},",
+            "\t\"success\": { },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Call another action by name"
+    },
+    "Action - $reload": {
+        "prefix": "$reload",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$reload\",",
+            "\t\"success\": { },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Refreshes the view completely by re-fetching content from the current URL"
+    },
+    "Action - $render": {
+        "prefix": "$render",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$render\",",
+            "\t\"success\": { },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Renders a template with data"
+    },
+    "Action - $snapshot": {
+        "prefix": "$snapshot",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$snapshot\",",
+            "\t\"success\": {",
+            "\t\t${0}",
+            "\t},",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Takes a snapshot of the currently visible screen"
+    },
+    "Action - $href": {
+        "prefix": "$href",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$href\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:www.mylinkurl.com/myfile.json}\",",
+            "\t\t\"view\": \"${2|jason,web,app|}\",",
+            "\t\t\"transition\": \"${3|push,modal,fullscreen|}\",",
+            "\t\t\"options\": {",
+            "\t\t\t${0}",
+            "\t\t}",
+            "\t},",
+            "\t\"success\": { },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "An action version of href. Works the same way, but can be used when a component doesn't support href attribute directly"
+    },
+    "Action - $close": {
+        "prefix": "$close",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$close\",",
+            "\t\"success\": { },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Close a modal (works when the currently view is a modal)"
+    },
+    "Action - $back": {
+        "prefix": "$back",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$back\",",
+            "\t\"success\": { },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Transition one step back from the current view. If the current view is a modal, it closes the current view, otherwise it slides back to the previous view"
+    },
+    "Action - $network.request": {
+        "prefix": "$network.request",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$network.request\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:www.mylinkurl.com/myfile.json}\",",
+            "\t\t\"method\": \"${2|get,post,put,delete|}\",",
+            "\t\t\"data\": { },",
+            "\t\t\"header\": { },",
+            "\t\t\"data_type\": \"${3|json,html,rss,raw|}\",",
+            "\t\t\"content_type\": \"\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Make GET/POST/PUT/DELETE Action requests"
+    },
+    "Action - $network.upload": {
+        "prefix": "$network.upload",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$network.upload\",",
+            "\t\"options\": {",
+            "\t\t\"type\": \"${1|s3|}\",",
+            "\t\t\"bucket\": \"${4:s3://...}\",",
+            "\t\t\"path\": \"${5:path/to/file}\",",
+            "\t\t\"sign_url\": \"${6:sign_url}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Upload data to cloud providers. Currently supports S3"
+    },
+    "Action - $session.set": {
+        "prefix": "$session.set",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$session.set\",",
+            "\t\"options\": {",
+            "\t\t\"domain\": \"${1:jasonbase.com}\",",
+            "\t\t\"header\": { },",
+            "\t\t\"body\": { }",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "$session.set takes care of token authentication to authenticate into any mobile API"
+    },
+    "Action - $session.reset": {
+        "prefix": "$session.reset",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$session.reset\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:www.url.com/fromwhich/to/signout}\",",
+            "\t\t\"domain\": \"${2:jasonbase.com}\",",
+            "\t\t\"data\": { },",
+            "\t\"type\": \"${3|json,html|}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "This action lets you clear sessions for a specified domain. Can be used for both token authentication and web authentication via cookies"
+    },
+    "Action - $set": {
+        "prefix": "$set",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$set\",",
+            "\t\"options\": { },",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Use $set and $get to set and get local variables."
+    },
+    "Action - $get": {
+        "prefix": "$get",
+        "body": "\"{{\\$get.${1:VARIABLE_NAME}}}\"",
+        "description": "Use $set and $get to set and get local variables."
+    },
+    "Action - $cache.set": {
+        "prefix": "$cache.set",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$cache.set\",",
+            "\t\"options\": {",
+            "\t\t\"items\": \"${1:\\$jason}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "$cache.set action is used to store to cache"
+    },
+    "Action - $cache.get": {
+        "prefix": "$cache.get",
+        "body": "\"{{\\$cache.${1:VARIABLE_NAME}}}\"",
+        "description": "Directly access $cache variable from a template expression"
+    },
+    "Action - $cache.reset": {
+        "prefix": "$cache.reset",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$cache.reset\",",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Use $cache.reset action to reset the cache associated with the current url"
+    },
+    "Action - $global.set": {
+        "prefix": "$global.set",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$global.set\",",
+            "\t\"options\": {",
+            "\t\t\"items\": \"${1:\\$jason}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "$global.set action is used to write to global variables"
+    },
+    "Action - $global.get": {
+        "prefix": "$global.get",
+        "body": "\"{{\\$global.${1:VARIABLE_NAME}}}\"",
+        "description": "Read global variables using template expressions"
+    },
+    "Action - $global.reset": {
+        "prefix": "$global.reset",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$global.reset\",",
+            "\t\"items\": [\"${1:Key}\"],",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Use $global.reset action to remove global variables by name"
+    },
+    "Action - $util.banner": {
+        "prefix": "$util.banner",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$util.banner\",",
+            "\t\"options\": {",
+            "\t\t\"title\": \"${1:Hello}\",",
+            "\t\t\"description\": \"${2:This is a message}\",",
+            "\t\t\"type\": \"${3|error,success,info|}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Displays a banner notification with title and description"
+    },
+    "Action - $util.toast": {
+        "prefix": "$util.toast",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$util.toast\",",
+            "\t\"options\": {",
+            "\t\t\"text\": \"${1:I'm a toast. I display a simple text.}\",",
+            "\t\t\"type\": \"${2|error,info,warning,dark,default,success|}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Displays a toast notification with a simple text"
+    },
+    "Action - $util.alert": {
+        "prefix": "$util.alert",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$util.toast\",",
+            "\t\"options\": {",
+            "\t\t\"title\": \"${1:Hello}\",",
+            "\t\t\"description\": \"${2:This is a message}\",",
+            "\t\t\"form\": [ ${0} ]",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Displays an alert"
+    },
+    "Action - $util.share": {
+        "prefix": "$util.share",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$util.share\",",
+            "\t\"options\": {",
+            "\t\t\"items\": [{",
+            "\t\t\t\"type\": \"${1|text,image,video|}\",",
+            "\t\t\t\"text\": \"${2:I'm a toast. I display a simple text.}\",",
+            "\t\t\t\"data\": \"\",",
+            "\t\t\t\"url\": \"www.myurl.com/image.jpg\",",
+            "\t\t\t\"file_url\": \"www.myurl.com/video.mp4\"",
+            "\t\t}]",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Share a text, image, video, or a combination of them"
+    },
+    "Action - $util.picker": {
+        "prefix": "$util.picker",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$util.picker\",",
+            "\t\"options\": {",
+            "\t\t\"title\": \"${1:Choose an item}\",",
+            "\t\t\"items\": [{",
+            "\t\t\t\"text\": \"${2:Choice}\",",
+            "\t\t\t\"href\": \"${3:MY_LAMBDA}\",",
+            "\t\t\t\"action\": { ${0} }",
+            "\t\t}]",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Opens a multiple choice picker menu, with each item linking to an action or an href"
+    },
+    "Action - $util.datepicker": {
+        "prefix": "$util.datepicker",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$util.datepicker\",",
+            "\t\"options\": {",
+            "\t\t\"title\": \"${1:Pick a date}\",",
+            "\t\t\"description\": \"${2:Just pick one}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Opens a datepicker and returns the value in unix time format"
+    },
+    "Action - $util.addressbook": {
+        "prefix": "$util.addressbook",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$util.addressbook\",",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Fetches the addressbook to populate them into $jason"
+    },
+    "Action - $media.camera": {
+        "prefix": "$media.camera",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$media.camera\",",
+            "\t\"options\": {",
+            "\t\t\"type\": \"${1|photo,video|}\",",
+            "\t\t\"edit\": \"${2|true,false|}\",",
+            "\t\t\"quality\": \"${3|high,medium,low|}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Capture a video or a photo using the device camera"
+    },
+    "Action - $media.picker": {
+        "prefix": "$media.picker",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$media.picker\",",
+            "\t\"options\": {",
+            "\t\t\"type\": \"${1|photo,video|}\",",
+            "\t\t\"edit\": \"${2|true,false|}\",",
+            "\t\t\"quality\": \"${3|high,medium,low|}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Opens the device camera roll"
+    },
+    "Action - $media.play": {
+        "prefix": "$media.play",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$media.play\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:https://vjs.zencdn.net/v/oceans.mp4}\",",
+            "\t\t\"muted\": \"${2|true,false|}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "plays a video from remote url"
+    },
+    "Action - $audio.play": {
+        "prefix": "$audio.play",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$audio.play\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/songexploder/SongExploder73-Busdriver.mp3}\",",
+            "\t\t\"title\": \"${2:Busdriver - Worlds to Run}\",",
+            "\t\t\"author\": \"${3:Song Exploder}\",",
+            "\t\t\"image\": \"${4:http://discover.pocketcasts.com/discover/images/400/fff9ba50-53e1-0131-8293-723c91aeae46.jpg}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Play audio from remote url"
+    },
+    "Action - $audio.pause": {
+        "prefix": "$audio.pause",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$audio.pause\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/songexploder/SongExploder73-Busdriver.mp3}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Pauses an audio clip that's already playing from a remote url"
+    },
+    "Action - $audio.stop": {
+        "prefix": "$audio.stop",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$audio.stop\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/songexploder/SongExploder73-Busdriver.mp3}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Stops an audio clip that's already playing from a remote url. If URL is specified, stops ONLY this url. Otherwise, stops all audios currently playing"
+    },
+    "Action - $audio.seek": {
+        "prefix": "$audio.seek",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$audio.seek\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/songexploder/SongExploder73-Busdriver.mp3}\",",
+            "\t\t\"position\": \"${2:0.35}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Seeks audio already playing from a remote url"
+    },
+    "Action - $audio.position": {
+        "prefix": "$audio.position",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$audio.position\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/songexploder/SongExploder73-Busdriver.mp3}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Get the position of the specified audio clip"
+    },
+    "Action - $audio.duration": {
+        "prefix": "$audio.duration",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$audio.duration\",",
+            "\t\"options\": {",
+            "\t\t\"url\": \"${1:http://www.podtrac.com/pts/redirect.mp3/traffic.libsyn.com/songexploder/SongExploder73-Busdriver.mp3}\",",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Returns total duration of the specified audio clip in seconds"
+    },
+    "Action - $audio.record": {
+        "prefix": "$audio.record",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$audio.record\",",
+            "\t\"options\": {",
+            "\t\t\"color\": \"rgb(${1:0},${2:0},${3:0})\",",
+            "\t\t\"color:disabled\": \"rgb(${4:0},${5:0},${6:0})\",",
+            "\t\t\"theme\": \"light\",",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Records audio"
+    },
+    "Action - $geo.get": {
+        "prefix": "$geo.get",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$geo.get\",",
+            "\t\"options\": {",
+            "\t\t\"distance\": \"${1:5000}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Get user's geolocation using accuracy in meters"
+    },
+    "Action - $timer.start": {
+        "prefix": "$timer.start",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$timer.start\",",
+            "\t\"options\": {",
+            "\t\t\"interval\": \"${1:1}\",",
+            "\t\t\"name\": \"${2:timer1}\",",
+            "\t\t\"repeats\": \"${3|true,false|}\",",
+            "\t\t\"action\": { ${0} }",
+            "\t},",
+            "\t\"success\": { },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Start a timer using seconds as a countdown"
+    },
+    "Action - $timer.stop": {
+        "prefix": "$timer.stop",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$timer.stop\",",
+            "\t\"options\": {",
+            "\t\t\"name\": \"${1:timer1}\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Stops a timer using the name of the timer"
+    },
+    "Action - $convert.csv": {
+        "prefix": "$convert.csv",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$convert.csv\",",
+            "\t\"options\": {",
+            "\t\t\"data\": \"\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Converts CSV to parsed JSON"
+    },
+    "Action - $convert.rss": {
+        "prefix": "$convert.rss",
+        "body": [
+            "{",
+            "\t\"type\": \"\\$convert.rss\",",
+            "\t\"options\": {",
+            "\t\t\"data\": \"\"",
+            "\t},",
+            "\t\"success\": { ${0} },",
+            "\t\"error\": { }",
+            "}"
+        ],
+        "description": "Convert RSS to JSON. Built on top of node-feedparser library"
+    },
+    "Component - label": {
+        "prefix": "label",
+        "body": [
+            "{",
+            "\t\"type\": \"label\",",
+            "\t\"text\": \"${1:Hello world}\",",
+            "\t\"style\": {",
+            "\t\t\"font\": \"${2|AcademyEngravedLetPlain,AlNile-Bold,AlNile,AmericanTypewriter,AmericanTypewriter-Bold,AmericanTypewriter-Condensed,AmericanTypewriter-CondensedBold,AmericanTypewriter-CondensedLight,AmericanTypewriter-Light,AppleColorEmoji,AppleSDGothicNeo-Thin,AppleSDGothicNeo-UltraLight,AppleSDGothicNeo-Light,AppleSDGothicNeo-Regular,AppleSDGothicNeo-Medium,AppleSDGothicNeo-SemiBold,AppleSDGothicNeo-Bold,AppleSDGothicNeo-Medium,ArialMT,Arial-BoldItalicMT,Arial-BoldMT,Arial-ItalicMT,ArialHebrew,ArialHebrew-Bold,ArialHebrew-Light,ArialRoundedMTBold,Avenir-Black,Avenir-BlackOblique,Avenir-Book,Avenir-BookOblique,Avenir-Heavy,Avenir-HeavyOblique,Avenir-Light,Avenir-LightOblique,Avenir-Medium,Avenir-MediumOblique,Avenir-Oblique,Avenir-Roman,AvenirNext-Bold,AvenirNext-BoldItalic,AvenirNext-DemiBold,AvenirNext-DemiBoldItalic,AvenirNext-Heavy,AvenirNext-HeavyItalic,AvenirNext-Italic,AvenirNext-Medium,AvenirNext-MediumItalic,AvenirNext-Regular,AvenirNext-UltraLight,AvenirNext-UltraLightItalic,AvenirNextCondensed-Bold,AvenirNextCondensed-BoldItalic,AvenirNextCondensed-DemiBold,AvenirNextCondensed-DemiBoldItalic,AvenirNextCondensed-Heavy,AvenirNextCondensed-HeavyItalic,AvenirNextCondensed-Italic,AvenirNextCondensed-Medium,AvenirNextCondensed-MediumItalic,AvenirNextCondensed-Regular,AvenirNextCondensed-UltraLight,AvenirNextCondensed-UltraLightItalic,BanglaSangamMN,BanglaSangamMN-Bold,Baskerville,Baskerville-Bold,Baskerville-BoldItalic,Baskerville-Italic,Baskerville-SemiBold,Baskerville-SemiBoldItalic,BodoniOrnamentsITCTT,BodoniSvtyTwoITCTT-Bold,BodoniSvtyTwoITCTT-Book,BodoniSvtyTwoITCTT-BookIta,BodoniSvtyTwoOSITCTT-Bold,BodoniSvtyTwoOSITCTT-Book,BodoniSvtyTwoOSITCTT-BookIt,BodoniSvtyTwoSCITCTT-Book,BradleyHandITCTT-Bold,ChalkboardSE-Bold,ChalkboardSE-Light,ChalkboardSE-Regular,Chalkduster,Cochin,Cochin-Bold,Cochin-BoldItalic,Cochin-Italic,Copperplate,Copperplate-Bold,Copperplate-Light,Courier,Courier-Bold,Courier-BoldOblique,Courier-Oblique,CourierNewPS-BoldItalicMT,CourierNewPS-BoldMT,CourierNewPS-ItalicMT,CourierNewPSMT,DBLCDTempBlack,DINAlternate-Bold,DINCondensed-Bold,DamascusBold,Damascus,DamascusLight,DamascusMedium,DamascusSemiBold,DevanagariSangamMN,DevanagariSangamMN-Bold,Didot,Didot-Bold,Didot-Italic,DiwanMishafi,EuphemiaUCAS,EuphemiaUCAS-Bold,EuphemiaUCAS-Italic,Farah,Futura-CondensedExtraBold,Futura-CondensedMedium,Futura-Medium,Futura-MediumItalic,GeezaPro,GeezaPro-Bold,Georgia,Georgia-Bold,Georgia-BoldItalic,Georgia-Italic,GillSans,GillSans-SemiBold,GillSans-SemiBoldItalic,GillSans-Bold,GillSans-BoldItalic,GillSans-UltraBold,GillSans-Italic,GillSans-Light,GillSans-LightItalic,GujaratiSangamMN,GujaratiSangamMN-Bold,GurmukhiMN,GurmukhiMN-Bold,STHeitiSC-Light,STHeitiSC-Medium,STHeitiTC-Light,STHeitiTC-Medium,Helvetica,Helvetica-Bold,Helvetica-BoldOblique,Helvetica-Light,Helvetica-LightOblique,Helvetica-Oblique,HelveticaNeue,HelveticaNeue-Bold,HelveticaNeue-BoldItalic,HelveticaNeue-CondensedBlack,HelveticaNeue-CondensedBold,HelveticaNeue-Italic,HelveticaNeue-Light,HelveticaNeue-LightItalic,HelveticaNeue-Medium,HelveticaNeue-MediumItalic,HelveticaNeue-UltraLight,HelveticaNeue-UltraLightItalic,HelveticaNeue-Thin,HelveticaNeue-ThinItalic,HiraKakuProN-W3,HiraKakuProN-W6,HiraMinProN-W3,HiraMinProN-W6,HiraginoSans-W3,HiraginoSans-W6,HoeflerText-Black,HoeflerText-BlackItalic,HoeflerText-Italic,HoeflerText-Regular,IowanOldStyle-Bold,IowanOldStyle-BoldItalic,IowanOldStyle-Italic,IowanOldStyle-Roman,Kailasa,Kailasa-Bold,KannadaSangamMN,KannadaSangamMN-Bold,KhmerSangamMN,KohinoorBangla-Light,KohinoorBangla-Regular,KohinoorBangla-Semibold,KohinoorDevanagari-Book,KohinoorDevanagari-Light,KohinoorDevanagari-Medium,KohinoorTelugu-Light,KohinoorTelugu-Regular,KohinoorTelugu-Medium,LaoSangamMN,MalayalamSangamMN,MalayalamSangamMN-Bold,Menlo-BoldItalic,Menlo-Regular,Menlo-Bold,Menlo-Italic,Marion-Bold,Marion-Italic,Marion-Regular,MarkerFelt-Thin,MarkerFelt-Wide,Noteworthy-Bold,Noteworthy-Light,Optima-Bold,Optima-BoldItalic,Optima-ExtraBlack,Optima-Italic,Optima-Regular,OriyaSangamMN,OriyaSangamMN-Bold,Palatino-Bold,Palatino-BoldItalic,Palatino-Italic,Palatino-Roman,Papyrus,Papyrus-Condensed,PartyLetPlain,PingFangHK-Ultralight,PingFangHK-Light,PingFangHK-Thin,PingFangHK-Regular,PingFangHK-Medium,PingFangHK-Semibold,PingFangSC-Ultralight,PingFangSC-Light,PingFangSC-Thin,PingFangSC-Regular,PingFangSC-Medium,PingFangSC-Semibold,PingFangTC-Ultralight,PingFangTC-Light,PingFangTC-Thin,PingFangTC-Regular,PingFangTC-Medium,PingFangTC-Semibold,SanFranciscoDisplay-Black,SanFranciscoDisplay-Bold,SanFranciscoDisplay-Heavy,SanFranciscoDisplay-Light,SanFranciscoDisplay-Medium,SanFranciscoDisplay-Regular,SanFranciscoDisplay-Semibold,SanFranciscoDisplay-Thin,SanFranciscoDisplay-Ultralight,SanFranciscoRounded-Black,SanFranciscoRounded-Bold,SanFranciscoRounded-Heavy,SanFranciscoRounded-Light,SanFranciscoRounded-Medium,SanFranciscoRounded-Regular,SanFranciscoRounded-Semibold,SanFranciscoRounded-Thin,SanFranciscoRounded-Ultralight,SanFranciscoText-Bold,SanFranciscoText-BoldG1,SanFranciscoText-BoldG2,SanFranciscoText-BoldG3,SanFranciscoText-BoldItalic,SanFranciscoText-BoldItalicG1,SanFranciscoText-BoldItalicG2,SanFranciscoText-BoldItalicG3,SanFranciscoText-Heavy,SanFranciscoText-HeavyItalic,SanFranciscoText-Light,SanFranciscoText-LightItalic,SanFranciscoText-Medium,SanFranciscoText-MediumItalic,SanFranciscoText-Regular,SanFranciscoText-RegularG1,SanFranciscoText-RegularG2,SanFranciscoText-RegularG3,SanFranciscoText-RegularItalic,SanFranciscoText-RegularItalicG1,SanFranciscoText-RegularItalicG2,SanFranciscoText-RegularItalicG3,SanFranciscoText-Semibold,SanFranciscoText-SemiboldItalic,SanFranciscoText-Thin,SanFranciscoText-ThinItalic,SavoyeLetPlain,SinhalaSangamMN,SinhalaSangamMN-Bold,SnellRoundhand,SnellRoundhand-Black,SnellRoundhand-Bold,Superclarendon-Regular,Superclarendon-BoldItalic,Superclarendon-Light,Superclarendon-BlackItalic,Superclarendon-Italic,Superclarendon-LightItalic,Superclarendon-Bold,Superclarendon-Black,TamilSangamMN,TamilSangamMN-Bold,TeluguSangamMN,TeluguSangamMN-Bold,Thonburi,Thonburi-Bold,Thonburi-Light,TimesNewRomanPS-BoldItalicMT,TimesNewRomanPS-BoldMT,TimesNewRomanPS-ItalicMT,TimesNewRomanPSMT,Trebuchet-BoldItalic,TrebuchetMS,TrebuchetMS-Bold,TrebuchetMS-Italic,Verdana,Verdana-Bold,Verdana-BoldItalic,Verdana-Italic,ZapfDingbatsITC,Zapfino|}\",",
+            "\t\t\"size\": \"${3:30}\",",
+            "\t\t\"color\": \"rgb(${4:0},${5:0},${6:0})\",",
+            "\t\t\"padding\": \"${7:10}\",",
+            "\t\t\"background\": \"rgb(${8:0},${9:0},${10:0})\",",
+            "\t\t\"corner_radius\": \"${11:0}\"",
+            "\t}",
+            "}"
+        ],
+        "description": "Static uneditable text element"
+    },
+    "Component - image": {
+        "prefix": "image",
+        "body": [
+            "{",
+            "\t\"type\": \"image\",",
+            "\t\"url\": \"${1:http://i.imgur.com/KUJPgGV.png}\",",
+            "\t\"header\": { },",
+            "\t\"style\": {",
+            "\t\t\"width\": \"${2:30}\",",
+            "\t\t\"height\": \"${3:10}\",",
+            "\t\t\"color\": \"rgb(${4:0},${5:0},${6:0})\",",
+            "\t\t\"corner_radius\": \"${7:0}\"",
+            "\t}",
+            "}"
+        ],
+        "description": "Image loaded from either remote url or data-url"
+    },
+    "Component - button": {
+        "prefix": "button",
+        "body": [
+            "{",
+            "\t\"type\": \"button\",",
+            "\t\"text\": \"${1:Click Me}\",",
+            "\t\"url\": \"${2:http://i.imgur.com/KUJPgGV.png}\",",
+            "\t\"header\": { },",
+            "\t\"style\": {",
+            "\t\t\"width\": \"${3:30}\",",
+            "\t\t\"height\": \"${4:10}\",",
+            "\t\t\"color\": \"rgb(${5:0},${6:0},${7:0})\",",
+            "\t\t\"background\": \"rgb(${8:0},${9:0},${10:0})\",",
+            "\t\t\"corner_radius\": \"${11:0}\",",
+            "\t\t\"padding\": \"${12:10}\",",
+            "\t\t\"align\": \"${13|left,right,center|}\"",
+            "\t},",
+            "\t\"action\": { }",
+            "}"
+        ],
+        "description": "A basic component that responds to user tap"
+    },
+    "Component - textfield": {
+        "prefix": "textfield",
+        "body": [
+            "{",
+            "\t\"type\": \"textfield\",",
+            "\t\"name\": \"${1:LocalVariableName}\",",
+            "\t\"placeholder\": \"${2:Placeholder Text}\",",
+            "\t\"keyboard\": \"${3|text,number,phone,url,email|}\",",
+            "\t\"style\": {",
+            "\t\t\"background\": \"rgb(${4:0},${5:0},${6:0})\",",
+            "\t\t\"align\": \"${7|left,right,center|}\",",
+            "\t\t\"autocorrect\": \"${8|true,false|}\",",
+            "\t\t\"autocapitalize\": \"${9|true,false|}\",",
+            "\t\t\"spellcheck\": \"${10|true,false|}\",",
+            "\t\t\"size\": \"${11:30}\",",
+            "\t\t\"font\": \"${12|AcademyEngravedLetPlain,AlNile-Bold,AlNile,AmericanTypewriter,AmericanTypewriter-Bold,AmericanTypewriter-Condensed,AmericanTypewriter-CondensedBold,AmericanTypewriter-CondensedLight,AmericanTypewriter-Light,AppleColorEmoji,AppleSDGothicNeo-Thin,AppleSDGothicNeo-UltraLight,AppleSDGothicNeo-Light,AppleSDGothicNeo-Regular,AppleSDGothicNeo-Medium,AppleSDGothicNeo-SemiBold,AppleSDGothicNeo-Bold,AppleSDGothicNeo-Medium,ArialMT,Arial-BoldItalicMT,Arial-BoldMT,Arial-ItalicMT,ArialHebrew,ArialHebrew-Bold,ArialHebrew-Light,ArialRoundedMTBold,Avenir-Black,Avenir-BlackOblique,Avenir-Book,Avenir-BookOblique,Avenir-Heavy,Avenir-HeavyOblique,Avenir-Light,Avenir-LightOblique,Avenir-Medium,Avenir-MediumOblique,Avenir-Oblique,Avenir-Roman,AvenirNext-Bold,AvenirNext-BoldItalic,AvenirNext-DemiBold,AvenirNext-DemiBoldItalic,AvenirNext-Heavy,AvenirNext-HeavyItalic,AvenirNext-Italic,AvenirNext-Medium,AvenirNext-MediumItalic,AvenirNext-Regular,AvenirNext-UltraLight,AvenirNext-UltraLightItalic,AvenirNextCondensed-Bold,AvenirNextCondensed-BoldItalic,AvenirNextCondensed-DemiBold,AvenirNextCondensed-DemiBoldItalic,AvenirNextCondensed-Heavy,AvenirNextCondensed-HeavyItalic,AvenirNextCondensed-Italic,AvenirNextCondensed-Medium,AvenirNextCondensed-MediumItalic,AvenirNextCondensed-Regular,AvenirNextCondensed-UltraLight,AvenirNextCondensed-UltraLightItalic,BanglaSangamMN,BanglaSangamMN-Bold,Baskerville,Baskerville-Bold,Baskerville-BoldItalic,Baskerville-Italic,Baskerville-SemiBold,Baskerville-SemiBoldItalic,BodoniOrnamentsITCTT,BodoniSvtyTwoITCTT-Bold,BodoniSvtyTwoITCTT-Book,BodoniSvtyTwoITCTT-BookIta,BodoniSvtyTwoOSITCTT-Bold,BodoniSvtyTwoOSITCTT-Book,BodoniSvtyTwoOSITCTT-BookIt,BodoniSvtyTwoSCITCTT-Book,BradleyHandITCTT-Bold,ChalkboardSE-Bold,ChalkboardSE-Light,ChalkboardSE-Regular,Chalkduster,Cochin,Cochin-Bold,Cochin-BoldItalic,Cochin-Italic,Copperplate,Copperplate-Bold,Copperplate-Light,Courier,Courier-Bold,Courier-BoldOblique,Courier-Oblique,CourierNewPS-BoldItalicMT,CourierNewPS-BoldMT,CourierNewPS-ItalicMT,CourierNewPSMT,DBLCDTempBlack,DINAlternate-Bold,DINCondensed-Bold,DamascusBold,Damascus,DamascusLight,DamascusMedium,DamascusSemiBold,DevanagariSangamMN,DevanagariSangamMN-Bold,Didot,Didot-Bold,Didot-Italic,DiwanMishafi,EuphemiaUCAS,EuphemiaUCAS-Bold,EuphemiaUCAS-Italic,Farah,Futura-CondensedExtraBold,Futura-CondensedMedium,Futura-Medium,Futura-MediumItalic,GeezaPro,GeezaPro-Bold,Georgia,Georgia-Bold,Georgia-BoldItalic,Georgia-Italic,GillSans,GillSans-SemiBold,GillSans-SemiBoldItalic,GillSans-Bold,GillSans-BoldItalic,GillSans-UltraBold,GillSans-Italic,GillSans-Light,GillSans-LightItalic,GujaratiSangamMN,GujaratiSangamMN-Bold,GurmukhiMN,GurmukhiMN-Bold,STHeitiSC-Light,STHeitiSC-Medium,STHeitiTC-Light,STHeitiTC-Medium,Helvetica,Helvetica-Bold,Helvetica-BoldOblique,Helvetica-Light,Helvetica-LightOblique,Helvetica-Oblique,HelveticaNeue,HelveticaNeue-Bold,HelveticaNeue-BoldItalic,HelveticaNeue-CondensedBlack,HelveticaNeue-CondensedBold,HelveticaNeue-Italic,HelveticaNeue-Light,HelveticaNeue-LightItalic,HelveticaNeue-Medium,HelveticaNeue-MediumItalic,HelveticaNeue-UltraLight,HelveticaNeue-UltraLightItalic,HelveticaNeue-Thin,HelveticaNeue-ThinItalic,HiraKakuProN-W3,HiraKakuProN-W6,HiraMinProN-W3,HiraMinProN-W6,HiraginoSans-W3,HiraginoSans-W6,HoeflerText-Black,HoeflerText-BlackItalic,HoeflerText-Italic,HoeflerText-Regular,IowanOldStyle-Bold,IowanOldStyle-BoldItalic,IowanOldStyle-Italic,IowanOldStyle-Roman,Kailasa,Kailasa-Bold,KannadaSangamMN,KannadaSangamMN-Bold,KhmerSangamMN,KohinoorBangla-Light,KohinoorBangla-Regular,KohinoorBangla-Semibold,KohinoorDevanagari-Book,KohinoorDevanagari-Light,KohinoorDevanagari-Medium,KohinoorTelugu-Light,KohinoorTelugu-Regular,KohinoorTelugu-Medium,LaoSangamMN,MalayalamSangamMN,MalayalamSangamMN-Bold,Menlo-BoldItalic,Menlo-Regular,Menlo-Bold,Menlo-Italic,Marion-Bold,Marion-Italic,Marion-Regular,MarkerFelt-Thin,MarkerFelt-Wide,Noteworthy-Bold,Noteworthy-Light,Optima-Bold,Optima-BoldItalic,Optima-ExtraBlack,Optima-Italic,Optima-Regular,OriyaSangamMN,OriyaSangamMN-Bold,Palatino-Bold,Palatino-BoldItalic,Palatino-Italic,Palatino-Roman,Papyrus,Papyrus-Condensed,PartyLetPlain,PingFangHK-Ultralight,PingFangHK-Light,PingFangHK-Thin,PingFangHK-Regular,PingFangHK-Medium,PingFangHK-Semibold,PingFangSC-Ultralight,PingFangSC-Light,PingFangSC-Thin,PingFangSC-Regular,PingFangSC-Medium,PingFangSC-Semibold,PingFangTC-Ultralight,PingFangTC-Light,PingFangTC-Thin,PingFangTC-Regular,PingFangTC-Medium,PingFangTC-Semibold,SanFranciscoDisplay-Black,SanFranciscoDisplay-Bold,SanFranciscoDisplay-Heavy,SanFranciscoDisplay-Light,SanFranciscoDisplay-Medium,SanFranciscoDisplay-Regular,SanFranciscoDisplay-Semibold,SanFranciscoDisplay-Thin,SanFranciscoDisplay-Ultralight,SanFranciscoRounded-Black,SanFranciscoRounded-Bold,SanFranciscoRounded-Heavy,SanFranciscoRounded-Light,SanFranciscoRounded-Medium,SanFranciscoRounded-Regular,SanFranciscoRounded-Semibold,SanFranciscoRounded-Thin,SanFranciscoRounded-Ultralight,SanFranciscoText-Bold,SanFranciscoText-BoldG1,SanFranciscoText-BoldG2,SanFranciscoText-BoldG3,SanFranciscoText-BoldItalic,SanFranciscoText-BoldItalicG1,SanFranciscoText-BoldItalicG2,SanFranciscoText-BoldItalicG3,SanFranciscoText-Heavy,SanFranciscoText-HeavyItalic,SanFranciscoText-Light,SanFranciscoText-LightItalic,SanFranciscoText-Medium,SanFranciscoText-MediumItalic,SanFranciscoText-Regular,SanFranciscoText-RegularG1,SanFranciscoText-RegularG2,SanFranciscoText-RegularG3,SanFranciscoText-RegularItalic,SanFranciscoText-RegularItalicG1,SanFranciscoText-RegularItalicG2,SanFranciscoText-RegularItalicG3,SanFranciscoText-Semibold,SanFranciscoText-SemiboldItalic,SanFranciscoText-Thin,SanFranciscoText-ThinItalic,SavoyeLetPlain,SinhalaSangamMN,SinhalaSangamMN-Bold,SnellRoundhand,SnellRoundhand-Black,SnellRoundhand-Bold,Superclarendon-Regular,Superclarendon-BoldItalic,Superclarendon-Light,Superclarendon-BlackItalic,Superclarendon-Italic,Superclarendon-LightItalic,Superclarendon-Bold,Superclarendon-Black,TamilSangamMN,TamilSangamMN-Bold,TeluguSangamMN,TeluguSangamMN-Bold,Thonburi,Thonburi-Bold,Thonburi-Light,TimesNewRomanPS-BoldItalicMT,TimesNewRomanPS-BoldMT,TimesNewRomanPS-ItalicMT,TimesNewRomanPSMT,Trebuchet-BoldItalic,TrebuchetMS,TrebuchetMS-Bold,TrebuchetMS-Italic,Verdana,Verdana-Bold,Verdana-BoldItalic,Verdana-Italic,ZapfDingbatsITC,Zapfino|}\",",
+            "\t\t\"color\": \"rgb(${13:0},${14:0},${15:0})\",",
+            "\t\t\"placeholder_color\": \"rgb(${16:0},${17:0},${18:0})\",",
+            "\t\t\"secure\": \"${19|true,false|}\"",
+            "\t}",
+            "}"
+        ],
+        "description": "Single line input field"
+    },
+    "Component - textarea": {
+        "prefix": "textarea",
+        "body": [
+            "{",
+            "\t\"type\": \"textarea\",",
+            "\t\"name\": \"${1:LocalVariableName}\",",
+            "\t\"value\": \"${2:Prefilled Value}\",",
+            "\t\"placeholder\": \"${3:Placeholder Text}\",",
+            "\t\"keyboard\": \"${4|text,number,phone,url,email|}\",",
+            "\t\"style\": {",
+            "\t\t\"background\": \"rgb(${5:0},${6:0},${7:0})\",",
+            "\t\t\"align\": \"${8|left,right,center|}\",",
+            "\t\t\"autocorrect\": \"${9|true,false|}\",",
+            "\t\t\"autocapitalize\": \"${10|true,false|}\",",
+            "\t\t\"spellcheck\": \"${11|true,false|}\",",
+            "\t\t\"size\": \"${12:30}\",",
+            "\t\t\"font\": \"${13|AcademyEngravedLetPlain,AlNile-Bold,AlNile,AmericanTypewriter,AmericanTypewriter-Bold,AmericanTypewriter-Condensed,AmericanTypewriter-CondensedBold,AmericanTypewriter-CondensedLight,AmericanTypewriter-Light,AppleColorEmoji,AppleSDGothicNeo-Thin,AppleSDGothicNeo-UltraLight,AppleSDGothicNeo-Light,AppleSDGothicNeo-Regular,AppleSDGothicNeo-Medium,AppleSDGothicNeo-SemiBold,AppleSDGothicNeo-Bold,AppleSDGothicNeo-Medium,ArialMT,Arial-BoldItalicMT,Arial-BoldMT,Arial-ItalicMT,ArialHebrew,ArialHebrew-Bold,ArialHebrew-Light,ArialRoundedMTBold,Avenir-Black,Avenir-BlackOblique,Avenir-Book,Avenir-BookOblique,Avenir-Heavy,Avenir-HeavyOblique,Avenir-Light,Avenir-LightOblique,Avenir-Medium,Avenir-MediumOblique,Avenir-Oblique,Avenir-Roman,AvenirNext-Bold,AvenirNext-BoldItalic,AvenirNext-DemiBold,AvenirNext-DemiBoldItalic,AvenirNext-Heavy,AvenirNext-HeavyItalic,AvenirNext-Italic,AvenirNext-Medium,AvenirNext-MediumItalic,AvenirNext-Regular,AvenirNext-UltraLight,AvenirNext-UltraLightItalic,AvenirNextCondensed-Bold,AvenirNextCondensed-BoldItalic,AvenirNextCondensed-DemiBold,AvenirNextCondensed-DemiBoldItalic,AvenirNextCondensed-Heavy,AvenirNextCondensed-HeavyItalic,AvenirNextCondensed-Italic,AvenirNextCondensed-Medium,AvenirNextCondensed-MediumItalic,AvenirNextCondensed-Regular,AvenirNextCondensed-UltraLight,AvenirNextCondensed-UltraLightItalic,BanglaSangamMN,BanglaSangamMN-Bold,Baskerville,Baskerville-Bold,Baskerville-BoldItalic,Baskerville-Italic,Baskerville-SemiBold,Baskerville-SemiBoldItalic,BodoniOrnamentsITCTT,BodoniSvtyTwoITCTT-Bold,BodoniSvtyTwoITCTT-Book,BodoniSvtyTwoITCTT-BookIta,BodoniSvtyTwoOSITCTT-Bold,BodoniSvtyTwoOSITCTT-Book,BodoniSvtyTwoOSITCTT-BookIt,BodoniSvtyTwoSCITCTT-Book,BradleyHandITCTT-Bold,ChalkboardSE-Bold,ChalkboardSE-Light,ChalkboardSE-Regular,Chalkduster,Cochin,Cochin-Bold,Cochin-BoldItalic,Cochin-Italic,Copperplate,Copperplate-Bold,Copperplate-Light,Courier,Courier-Bold,Courier-BoldOblique,Courier-Oblique,CourierNewPS-BoldItalicMT,CourierNewPS-BoldMT,CourierNewPS-ItalicMT,CourierNewPSMT,DBLCDTempBlack,DINAlternate-Bold,DINCondensed-Bold,DamascusBold,Damascus,DamascusLight,DamascusMedium,DamascusSemiBold,DevanagariSangamMN,DevanagariSangamMN-Bold,Didot,Didot-Bold,Didot-Italic,DiwanMishafi,EuphemiaUCAS,EuphemiaUCAS-Bold,EuphemiaUCAS-Italic,Farah,Futura-CondensedExtraBold,Futura-CondensedMedium,Futura-Medium,Futura-MediumItalic,GeezaPro,GeezaPro-Bold,Georgia,Georgia-Bold,Georgia-BoldItalic,Georgia-Italic,GillSans,GillSans-SemiBold,GillSans-SemiBoldItalic,GillSans-Bold,GillSans-BoldItalic,GillSans-UltraBold,GillSans-Italic,GillSans-Light,GillSans-LightItalic,GujaratiSangamMN,GujaratiSangamMN-Bold,GurmukhiMN,GurmukhiMN-Bold,STHeitiSC-Light,STHeitiSC-Medium,STHeitiTC-Light,STHeitiTC-Medium,Helvetica,Helvetica-Bold,Helvetica-BoldOblique,Helvetica-Light,Helvetica-LightOblique,Helvetica-Oblique,HelveticaNeue,HelveticaNeue-Bold,HelveticaNeue-BoldItalic,HelveticaNeue-CondensedBlack,HelveticaNeue-CondensedBold,HelveticaNeue-Italic,HelveticaNeue-Light,HelveticaNeue-LightItalic,HelveticaNeue-Medium,HelveticaNeue-MediumItalic,HelveticaNeue-UltraLight,HelveticaNeue-UltraLightItalic,HelveticaNeue-Thin,HelveticaNeue-ThinItalic,HiraKakuProN-W3,HiraKakuProN-W6,HiraMinProN-W3,HiraMinProN-W6,HiraginoSans-W3,HiraginoSans-W6,HoeflerText-Black,HoeflerText-BlackItalic,HoeflerText-Italic,HoeflerText-Regular,IowanOldStyle-Bold,IowanOldStyle-BoldItalic,IowanOldStyle-Italic,IowanOldStyle-Roman,Kailasa,Kailasa-Bold,KannadaSangamMN,KannadaSangamMN-Bold,KhmerSangamMN,KohinoorBangla-Light,KohinoorBangla-Regular,KohinoorBangla-Semibold,KohinoorDevanagari-Book,KohinoorDevanagari-Light,KohinoorDevanagari-Medium,KohinoorTelugu-Light,KohinoorTelugu-Regular,KohinoorTelugu-Medium,LaoSangamMN,MalayalamSangamMN,MalayalamSangamMN-Bold,Menlo-BoldItalic,Menlo-Regular,Menlo-Bold,Menlo-Italic,Marion-Bold,Marion-Italic,Marion-Regular,MarkerFelt-Thin,MarkerFelt-Wide,Noteworthy-Bold,Noteworthy-Light,Optima-Bold,Optima-BoldItalic,Optima-ExtraBlack,Optima-Italic,Optima-Regular,OriyaSangamMN,OriyaSangamMN-Bold,Palatino-Bold,Palatino-BoldItalic,Palatino-Italic,Palatino-Roman,Papyrus,Papyrus-Condensed,PartyLetPlain,PingFangHK-Ultralight,PingFangHK-Light,PingFangHK-Thin,PingFangHK-Regular,PingFangHK-Medium,PingFangHK-Semibold,PingFangSC-Ultralight,PingFangSC-Light,PingFangSC-Thin,PingFangSC-Regular,PingFangSC-Medium,PingFangSC-Semibold,PingFangTC-Ultralight,PingFangTC-Light,PingFangTC-Thin,PingFangTC-Regular,PingFangTC-Medium,PingFangTC-Semibold,SanFranciscoDisplay-Black,SanFranciscoDisplay-Bold,SanFranciscoDisplay-Heavy,SanFranciscoDisplay-Light,SanFranciscoDisplay-Medium,SanFranciscoDisplay-Regular,SanFranciscoDisplay-Semibold,SanFranciscoDisplay-Thin,SanFranciscoDisplay-Ultralight,SanFranciscoRounded-Black,SanFranciscoRounded-Bold,SanFranciscoRounded-Heavy,SanFranciscoRounded-Light,SanFranciscoRounded-Medium,SanFranciscoRounded-Regular,SanFranciscoRounded-Semibold,SanFranciscoRounded-Thin,SanFranciscoRounded-Ultralight,SanFranciscoText-Bold,SanFranciscoText-BoldG1,SanFranciscoText-BoldG2,SanFranciscoText-BoldG3,SanFranciscoText-BoldItalic,SanFranciscoText-BoldItalicG1,SanFranciscoText-BoldItalicG2,SanFranciscoText-BoldItalicG3,SanFranciscoText-Heavy,SanFranciscoText-HeavyItalic,SanFranciscoText-Light,SanFranciscoText-LightItalic,SanFranciscoText-Medium,SanFranciscoText-MediumItalic,SanFranciscoText-Regular,SanFranciscoText-RegularG1,SanFranciscoText-RegularG2,SanFranciscoText-RegularG3,SanFranciscoText-RegularItalic,SanFranciscoText-RegularItalicG1,SanFranciscoText-RegularItalicG2,SanFranciscoText-RegularItalicG3,SanFranciscoText-Semibold,SanFranciscoText-SemiboldItalic,SanFranciscoText-Thin,SanFranciscoText-ThinItalic,SavoyeLetPlain,SinhalaSangamMN,SinhalaSangamMN-Bold,SnellRoundhand,SnellRoundhand-Black,SnellRoundhand-Bold,Superclarendon-Regular,Superclarendon-BoldItalic,Superclarendon-Light,Superclarendon-BlackItalic,Superclarendon-Italic,Superclarendon-LightItalic,Superclarendon-Bold,Superclarendon-Black,TamilSangamMN,TamilSangamMN-Bold,TeluguSangamMN,TeluguSangamMN-Bold,Thonburi,Thonburi-Bold,Thonburi-Light,TimesNewRomanPS-BoldItalicMT,TimesNewRomanPS-BoldMT,TimesNewRomanPS-ItalicMT,TimesNewRomanPSMT,Trebuchet-BoldItalic,TrebuchetMS,TrebuchetMS-Bold,TrebuchetMS-Italic,Verdana,Verdana-Bold,Verdana-BoldItalic,Verdana-Italic,ZapfDingbatsITC,Zapfino|}\",",
+            "\t\t\"color\": \"rgb(${14:0},${15:0},${16:0})\",",
+            "\t\t\"placeholder_color\": \"rgb(${17:0},${18:0},${19:0})\"",
+            "\t}",
+            "}"
+        ],
+        "description": "Multiline input field"
+    },
+    "Component - slider": {
+        "prefix": "slider",
+        "body": [
+            "{",
+            "\t\"type\": \"slider\",",
+            "\t\"name\": \"${1:LocalVariableName}\",",
+            "\t\"value\": \"${2:0.3}\",",
+            "\t\"action\": { },",
+            "\t\"style\": {",
+            "\t\t\"width\": \"${3:30}\",",
+            "\t\t\"height\": \"${4:10}\",",
+            "\t\t\"color\": \"rgb(${5:0},${6:0},${7:0})\"",
+            "\t}",
+            "}"
+        ],
+        "description": "Horizontal slider input"
+    },
+    "Component - html": {
+        "prefix": "html",
+        "body": [
+            "{",
+            "\t\"type\": \"html\",",
+            "\t\"style\": { },",
+            "\t\"text\": \"${1:<html><head><style>h1{font-size: 30px; color: #000;</style></head><body><h1>Hello World</h1></body></html>}\"",
+            "}"
+        ],
+        "description": "A self-contained web environment that you can plug in, style, and manipulate just like the rest of the components"
+    },
+    "Component - space": {
+        "prefix": "space",
+        "body": [
+            "{",
+            "\t\"type\": \"space\",",
+            "\t\"style\": {",
+            "\t\t\"background\": \"rgb(${1:0},${2:0},${3:0})\",",
+            "\t\t\"width\": \"${4:30}\",",
+            "\t\t\"height\": \"${5:10}\"",
+            "\t}",
+            "}"
+        ],
+        "description": "An empty space component mostly used for layout purposes"
+    },
+    "Component - map": {
+        "prefix": "map",
+        "body": [
+            "{",
+            "\t\"type\": \"map\",",
+            "\t\"region\": {",
+            "\t\t\"coord\": \"${1:0},${2:0}\",",
+            "\t\t\"width\": \"${3:30}\",",
+            "\t\t\"height\": \"${4:10}\"",
+            "\t},",
+            "\t\"pins\": {",
+            "\t\t\"title\": \"${5:This is a pin}\",",
+            "\t\t\"description\": \"${6:It really is.}\",",
+            "\t\t\"coord\": \"${7:0},${8:0}\",",
+            "\t\t\"style\": {",
+            "\t\t\t\"selected\": \"${9|true,false|},\"",
+            "\t\t}",
+            "\t},",
+            "\t\"style\": {",
+            "\t\t\"type\": \"${10|sattelite,hybrid,hybrid_flyover,satellite_flyover|}\",",
+            "\t\t\"width\": \"${11:30}\",",
+            "\t\t\"height\": \"${12:10}\",",
+            "\t\t\"corner_radius\": \"${13:0}\"",
+            "\t}",
+            "}"
+        ],
+        "description": "Map component"
+    },
+    "Layout - layout": {
+        "prefix": "layout",
+        "body": [
+            "{",
+            "\t\"type\": \"${1|vertical,horizontal|}\",",
+            "\t\"style\": {",
+            "\t\t\"padding\": \"${2:10}\",",
+            "\t\t\"spacing\": \"${3:10}\",",
+            "\t\t\"background\": \"rgb(${4:0},${5:0},${6:0})\",",
+            "\t\t\"z_index\": \"${7:0}\",",
+            "\t\t\"opacity\": \"${8:1}\",",
+            "\t\t\"align\": \"${9|left,center,right,top,bottom,fill|}\",",
+            "\t\t\"distribution\": \"${10|fill,equalsize|}\"",
+            "\t},",
+            "\t\"components\": [",
+            "\t\t${0}",
+            "\t]",
+            "}"
+        ],
+        "description": "A layout to store components in"
+    },
+    "Layout - nested layout": {
+        "prefix": "nestedlayout",
+        "body": [
+            "{",
+            "\t\"type\": \"${1|vertical,horizontal|}\",",
+            "\t\"style\": {",
+            "\t\t\"padding\": \"${2:10}\",",
+            "\t\t\"spacing\": \"${3:10}\",",
+            "\t\t\"background\": \"rgb(${4:0},${5:0},${6:0})\",",
+            "\t\t\"z_index\": \"${7:0}\",",
+            "\t\t\"opacity\": \"${8:1}\",",
+            "\t\t\"align\": \"${9|left,center,right,top,bottom,fill|}\",",
+            "\t\t\"distribution\": \"${10|fill,equalsize|}\"",
+            "\t},",
+            "\t\"components\": [{",
+            "\t\t\"type\": \"${11|vertical,horizontal|}\",",
+            "\t\t\"style\": {",
+            "\t\t\t\"padding\": \"${12:10}\",",
+            "\t\t\t\"spacing\": \"${13:10}\",",
+            "\t\t\t\"background\": \"rgb(${14:0},${15:0},${16:0})\",",
+            "\t\t\t\"z_index\": \"${17:0}\",",
+            "\t\t\t\"opacity\": \"${18:1}\",",
+            "\t\t\t\"align\": \"${19|left,center,right,top,bottom,fill|}\",",
+            "\t\t\t\"distribution\": \"${20|fill,equalsize|}\"",
+            "\t\t},",
+            "\t\t\"components\": [",
+            "\t\t\t${0}",
+            "\t\t]",
+            "\t}]",
+            "}"
+        ],
+        "description": "A layout to store components in"
+    },
+    "Templates - each": {
+        "prefix": "each",
+        "body": [
+            "\"{{#each ${1:collection}}}\": {",
+            "\t\"type\": \"${2:component}\"",
+            "}"
+        ],
+        "description": "Iterates through the expression that comes after declaration"
+    },
+    "Templates - if": {
+        "prefix": "if",
+        "body": [
+            "[{",
+            "\t\"{{#if ${1:expression}}}\": ${2:\"Yes\"}",
+            "}]"
+        ],
+        "description": "Single conditional statement"
+    },
+    "Templates - ifelse": {
+        "prefix": "ifelse",
+        "body": [
+            "[{",
+            "\t\"{{#if ${1:expression}}}\": ${2:\"Yes\"}",
+            "},{",
+            "\t\"{{#else ${3:expression}}}\": ${4:\"No\"}",
+            "}]"
+        ],
+        "description": "Conditional statement including else"
+    },
+    "Templates - elseif": {
+        "prefix": "elseif",
+        "body": [
+            "[{",
+            "\t\"{{#if ${1:expression}}}\": ${2:\"Yes\"}",
+            "},{",
+            "\t\"{{#elseif ${3:expression}}}\": ${4:\"Maybe\"}",
+            "},{",
+            "\t\"{{#else ${5:expression}}}\": ${6:\"No\"}",
+            "}]"
+        ],
+        "description": "Conditional statement including else"
+    },
+    "Templates - this": {
+        "prefix": "this",
+        "body": "\"{{this}}\"",
+        "description": "This keyword"
+    },
+    "Templates - mixin": {
+        "prefix": "mixin",
+        "body": "\"@\": \"${1:https://custom.templates/item.json}\"",
+        "description": "Mixin Helper"
+    }
+}
