@@ -2,7 +2,7 @@
 
 This extension adds some jazzy Jasonette Code Snippets into Visual Studio Code. Get stoked!
 
-![Jasonette Snippets](jasonette-snippets-code.gif "Jasonette Snippets In Action")
+![Jasonette Snippets](images/jasonette-snippets-code.gif "Jasonette Snippets In Action")
 
 ## Features
 
