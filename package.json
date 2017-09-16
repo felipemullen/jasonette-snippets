@@ -4,6 +4,9 @@
     "description": "Contains JSON code snippets for Jasonette Actions and Components",
     "version": "1.0.0",
     "publisher": "felipemullen",
+    "repository": {
+        "url": "https://github.com/felipemullen/jasonette-snippets"
+    },
     "engines": {
         "vscode": "^1.16.0"
     },
