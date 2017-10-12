@@ -3,6 +3,10 @@ All notable changes to the "jasonette-snippets" extension will be documented in 
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## [1.1.1] - 2017-09-16
+### Added
+- fonts.ios snippet for a quick dropdown of fonts
+
 ## [1.0.1] - 2017-09-16
 ### Fixed
 - Trailing comma in $audio.duration after "url" prop
